@@ -387,9 +387,9 @@
         "Node name for S&R": "CLIPTextEncode"
       },
       "widgets_values": [
-        "photo of a man as a Warhammer 40k Space Marine of the Adeptus Astartes, bareheaded with no helmet, his face clearly visible, looking at the viewer, wearing massive bulky ornate power armor with gold trim, huge pauldrons, purity seals, aquila emblem on the chest plate, gothic cathedral battlefield background, smoke and embers, dramatic rim lighting, cinematic, highly detailed, 35mm photograph"
+        "adeptusastartes, photo of a man as a Warhammer 40k Space Marine of the Adeptus Astartes, bareheaded with no helmet, his face clearly visible, looking at the viewer, wearing massive bulky ornate power armor with gold trim, huge pauldrons, purity seals, aquila emblem on the chest plate, gothic cathedral battlefield background, smoke and embers, dramatic rim lighting, cinematic, highly detailed, 35mm photograph"
       ],
-      "title": "Prompt (add the LoRA trigger word here)"
+      "title": "Prompt (starts with trigger word adeptusastartes)"
     },
     {
       "id": 11,

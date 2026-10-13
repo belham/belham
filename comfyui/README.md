@@ -37,7 +37,7 @@ if `insightface` fails to build, see
 | `flux1-dev.safetensors` (~24 GB VRAM) or `flux1-dev-fp8-e4m3fn.safetensors` (~12 GB) | `models/diffusion_models/` (or `models/unet/`) | [black-forest-labs/FLUX.1-dev](https://huggingface.co/black-forest-labs/FLUX.1-dev) (gated: accept the license) / [Kijai/flux-fp8](https://huggingface.co/Kijai/flux-fp8) |
 | `t5xxl_fp8_e4m3fn.safetensors`, `clip_l.safetensors` | `models/text_encoders/` (or `models/clip/`) | [comfyanonymous/flux_text_encoders](https://huggingface.co/comfyanonymous/flux_text_encoders) |
 | `ae.safetensors` | `models/vae/` | [black-forest-labs/FLUX.1-schnell](https://huggingface.co/black-forest-labs/FLUX.1-schnell/blob/main/ae.safetensors) |
-| the Adeptus Astartes LoRA | `models/loras/` | [Civitai 766534](https://civitai.com/models/766534/adeptus-astartes-space-marinecustodes-flux-warhammer-40k-armor-concept) |
+| the Adeptus Astartes LoRA (85.6 MB) | `models/loras/` | [direct download](https://civitai.com/api/download/models/857358?fileId=766566) ([model page](https://civitai.com/models/766534/adeptus-astartes-space-marinecustodes-flux-warhammer-40k-armor-concept)); may need a Civitai login |
 | `pulid_flux_v0.9.1.safetensors` | `models/pulid/` (create it) | [guozinan/PuLID](https://huggingface.co/guozinan/PuLID/resolve/main/pulid_flux_v0.9.1.safetensors?download=true) |
 | EVA02-CLIP-L-14-336, AntelopeV2, facexlib | `models/clip/`, `models/insightface/models/antelopev2/`, `models/facexlib/` | Downloaded automatically on the first run |
 
@@ -47,8 +47,8 @@ if `insightface` fails to build, see
 2. In each loader, pick the file you actually downloaded. The JSON uses
    placeholder names (`flux1-dev.safetensors`, `adeptus_astartes_flux.safetensors`),
    so a red node just means the file name differs.
-3. **Add the LoRA's trigger word** to the start of the prompt. It's listed under
-   "Trigger Words" on the Civitai page, and it differs between the model's versions.
+3. Leave the trigger word **`adeptusastartes`** at the start of the prompt; it's
+   what switches the LoRA's armor style on.
 4. In **Upload photo of the person**, click *choose file to upload* and select
    the photo.
 5. Edit the prompt (e.g. "woman" instead of "man", Ultramarines blue, Custodes
@@ -65,12 +65,15 @@ if `insightface` fails to build, see
   gets weaker. Setting `start_at` to 0.1–0.2 gives the LoRA more control over the
   composition.
 - **LoRA strength** (default 1.0): the author recommends 0.6–1.5. Higher means
-  bulkier, more ornate armor; going too high can weaken the likeness. Prompt terms
-  like "bulky armor", "ornate", "gold trim" and "fur trim" steer the style.
+  bulkier, more ornate armor; going too high can weaken the likeness. The LoRA
+  mixes many armor types (Custodes, traitor, even the Emperor's), so steer it in
+  the prompt: "bulky armor", "ornate", "gold trim", "fur trim", plus colors,
+  armor parts, weapons and emblems.
 - **Sampler:** 25 steps, Euler / simple, CFG 1.0, FluxGuidance 3.5. Flux dev
   ignores negative prompts at CFG 1, so the negative is zeroed out.
 - **Low VRAM:** use the fp8 or GGUF Flux model and keep `weight_dtype` at
   `fp8_e4m3fn`.
-- **Commercial use:** InsightFace models are non-commercial. Swap
-  `PulidFluxInsightFaceLoader` for `PulidFluxFaceNetLoader` (run
-  `pip install facenet-pytorch --no-deps` first).
+- **License:** the LoRA is under the FLUX.1 [dev] Non-Commercial License.
+  InsightFace models are non-commercial too; `PulidFluxFaceNetLoader` (after
+  `pip install facenet-pytorch --no-deps`) replaces `PulidFluxInsightFaceLoader`
+  if that matters, but Flux dev and the LoRA stay non-commercial.
