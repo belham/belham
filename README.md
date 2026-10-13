@@ -1,5 +1,7 @@
 # Local Qwen3.5-9B Uncensored for Claude Code (via Ollama)
 
+> Also in this repo: [ComfyUI workflow that turns a photo of a person into a Warhammer 40k Space Marine](comfyui/README.md).
+
 Runs [HauhauCS/Qwen3.5-9B-Uncensored-HauhauCS-Aggressive](https://huggingface.co/HauhauCS/Qwen3.5-9B-Uncensored-HauhauCS-Aggressive)
 locally in Ollama, configured to drive Claude Code through Ollama's
 Anthropic-compatible API (`/v1/messages`).
