@@ -1,0 +1,26 @@
+# Ollama Modelfile for HauhauCS/Qwen3.5-9B-Uncensored-HauhauCS-Aggressive
+# https://huggingface.co/HauhauCS/Qwen3.5-9B-Uncensored-HauhauCS-Aggressive
+#
+# scripts/setup-qwen-ollama.sh fills in __FROM__ with the pulled GGUF
+# (hf.co/HauhauCS/Qwen3.5-9B-Uncensored-HauhauCS-Aggressive:<QUANT>).
+
+FROM __FROM__
+
+# Ollama's built-in Qwen 3.5 prompt renderer and output parser. These handle
+# Qwen 3.5's XML-style tool calls and <think> blocks, which Claude Code relies
+# on. Without them the raw GGUF chat template is used and tool calls tend to
+# come back as plain text instead of being executed.
+RENDERER qwen3.5
+PARSER qwen3.5
+
+# Claude Code's system prompt + tool definitions are large; Ollama recommends
+# at least 64K context for it. Raise to 131072 if you have the memory.
+PARAMETER num_ctx __NUM_CTX__
+
+# Qwen 3.5 recommended sampling for thinking mode / precise coding.
+PARAMETER temperature 0.6
+PARAMETER top_p 0.95
+PARAMETER top_k 20
+PARAMETER min_p 0
+PARAMETER presence_penalty 0
+PARAMETER repeat_penalty 1.0
