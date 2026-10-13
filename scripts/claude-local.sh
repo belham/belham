@@ -33,5 +33,9 @@ export CLAUDE_CODE_SUBAGENT_MODEL="$MODEL_NAME"
 export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 # Local generation is slow; don't time out long turns.
 export API_TIMEOUT_MS="${API_TIMEOUT_MS:-600000}"
+# Claude Code caps each reply at 32000 tokens by default. Qwen's thinking can
+# use a lot of that, so allow 64000. Prompt + output must fit in the model's
+# num_ctx (131072 from setup-qwen-ollama); with NUM_CTX=65536 set this to 32000.
+export CLAUDE_CODE_MAX_OUTPUT_TOKENS="${CLAUDE_CODE_MAX_OUTPUT_TOKENS:-64000}"
 
 exec claude --model "$MODEL_NAME" "$@"

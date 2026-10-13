@@ -21,6 +21,8 @@ $env:ANTHROPIC_SMALL_FAST_MODEL = $ModelName
 $env:CLAUDE_CODE_SUBAGENT_MODEL = $ModelName
 $env:CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = '1'
 if (-not $env:API_TIMEOUT_MS) { $env:API_TIMEOUT_MS = '600000' }
+# Raise Claude Code's default 32000-token reply cap; prompt + output must fit in num_ctx.
+if (-not $env:CLAUDE_CODE_MAX_OUTPUT_TOKENS) { $env:CLAUDE_CODE_MAX_OUTPUT_TOKENS = '64000' }
 
 & claude --model $ModelName @args
 exit $LASTEXITCODE

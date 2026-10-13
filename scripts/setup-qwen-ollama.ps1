@@ -4,8 +4,8 @@
 param(
   [ValidateSet('Q4_K_M', 'Q6_K', 'Q8_0', 'BF16')][string]$Quant = 'Q4_K_M',
   [string]$ModelName = 'qwen3.5-uncensored:9b',
-  [int]$NumCtx = 65536,
-  [double]$RepeatPenalty = 1.0
+  [int]$NumCtx = 131072,
+  [double]$RepeatPenalty = 1.1
 )
 $ErrorActionPreference = 'Stop'
 

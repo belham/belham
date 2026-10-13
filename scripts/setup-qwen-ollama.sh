@@ -7,16 +7,16 @@
 #
 # Env overrides:
 #   MODEL_NAME      name of the Ollama model to create (default: qwen3.5-uncensored:9b)
-#   NUM_CTX         context window (default: 65536; Claude Code needs >= 64K)
-#   REPEAT_PENALTY  default 1.0; try 1.1 if the model loops while thinking
+#   NUM_CTX         context window (default: 131072; Claude Code needs >= 64K)
+#   REPEAT_PENALTY  default 1.1 (stops thinking loops); 1.0 is Qwen's stock value
 #   OLLAMA_HOST     Ollama server (default: http://localhost:11434)
 set -euo pipefail
 
 QUANT="${1:-Q4_K_M}"
 case "$QUANT" in Q4_K_M | Q6_K | Q8_0 | BF16) ;; *) echo "error: unknown quant '$QUANT' (use Q4_K_M, Q6_K, Q8_0 or BF16)" >&2; exit 1 ;; esac
 MODEL_NAME="${MODEL_NAME:-qwen3.5-uncensored:9b}"
-NUM_CTX="${NUM_CTX:-65536}"
-REPEAT_PENALTY="${REPEAT_PENALTY:-1.0}"
+NUM_CTX="${NUM_CTX:-131072}"
+REPEAT_PENALTY="${REPEAT_PENALTY:-1.1}"
 OLLAMA_URL="${OLLAMA_HOST:-http://localhost:11434}"
 case "$OLLAMA_URL" in http://* | https://*) ;; *) OLLAMA_URL="http://$OLLAMA_URL" ;; esac
 
@@ -73,10 +73,13 @@ FROM $SOURCE
 RENDERER qwen3.5
 PARSER qwen3.5
 
-# Claude Code's system prompt + tools are large; it needs >= 64K context.
+# Claude Code's system prompt + tools are large (needs >= 64K), and its replies
+# can run to 64K tokens (claude-local's CLAUDE_CODE_MAX_OUTPUT_TOKENS).
 PARAMETER num_ctx $NUM_CTX
 
-# Qwen 3.5 recommended sampling for thinking mode / precise coding.
+# Qwen 3.5 recommended sampling for thinking mode / precise coding, plus a
+# mild repeat penalty: the 9B model otherwise tends to loop while thinking
+# until it hits the output limit.
 PARAMETER temperature 0.6
 PARAMETER top_p 0.95
 PARAMETER top_k 20
